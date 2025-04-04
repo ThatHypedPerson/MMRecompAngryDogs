@@ -5,27 +5,32 @@
 
 # Unique ID of this mod. Pick something long enough that it'll never be the same as any other mod.
 # The name displayed in the mod management menu is separate from this so this doesn't need to be human readable.
-id = "mm_recomp_mod_template"
+id = "mm_recomp_angry_dogs"
 
 # Version of this mod.
 version = "1.0.0"
 
 # The name that will show up for this mod in the mod menu. This should be human readable.
-display_name = "Always Spin Attack"
+display_name = "Angry Dogs"
 
 # The description that will show up when this mod is displayed in the mod menu. This should be human readable.
 description =  """
-This is an example mod for Majora's Mask: Recompiled that can be used as a template for creating mods. \
-When this mod is enabled, you will always perform a quickspin when swinging your sword.
+This mod changes how dogs react to you, regardless of your form.
 
-For more details, see https://github.com/Zelda64Recomp/MMRecompModTemplate."""
+You can change their behaviors to the following:
+Default - All dogs are normal (vanilla)
+Human   - All dogs are casual
+Deku    - All dogs are angry
+Goron   - All dogs are scared
+Zora    - All dogs are loyal
+"""
 
 # A short description that will show up in this mod's entry in the mod list. This should be human readable and kept short
 # to prevent it from being cut off due to the limited space.
-short_description = "Always perform a quickspin when swinging your sword."
+short_description = "Dogs (dis)like you!"
 
 # Authors of this mod.
-authors = [ "Your name here" ]
+authors = [ "Hyped (ThatHypedPerson)" ]
 
 # ID of the target recomp game.
 game_id = "mm"
@@ -52,38 +57,27 @@ native_libraries = [
 elf_path = "build/mod.elf"
 
 # Output mod filename.
-mod_filename = "mm_recomp_mod_template"
+mod_filename = "mm_recomp_angry_dogs"
 
 # Reference symbol files.
 func_reference_syms_file = "Zelda64RecompSyms/mm.us.rev1.syms.toml"
-data_reference_syms_files = [ "Zelda64RecompSyms/mm.us.rev1.datasyms.toml", "Zelda64RecompSyms/mm.us.rev1.datasyms_static.toml" ]
+data_reference_syms_files = [ "Zelda64RecompSyms/mm.us.rev1.datasyms.toml", "Zelda64RecompSyms/mm.us.rev1.datasyms_static.toml", "static_symbols.toml" ]
 
 # Additional files to include in the mod.
-additional_files = [ ]
+additional_files = [ "thumb.dds" ]
 
 [[manifest.config_options]]
-id = "enum_option"
-name = "Enum Option"
-description = "Test enum config option"
+id = "dog_behavior"
+name = "Dog Behavior"
+description = """
+Change how dogs act around you.
+
+Default - All dogs are normal (vanilla)
+Human   - All dogs are casual
+Deku    - All dogs are angry
+Goron   - All dogs are scared
+Zora    - All dogs are loyal
+"""
 type = "Enum"
-options = [ "First", "Second" ]
-default = "First"
-
-[[manifest.config_options]]
-id = "number_option"
-name = "Number Option"
-description = "Test number config option."
-type = "Number"
-min = 0
-max = 10
-step = 0.1
-precision = 1
-percent = false
-default = 1
-
-[[manifest.config_options]]
-id = "string_option"
-name = "String Option"
-description = "Test string config option."
-type = "String"
-default = "Lorem Ipsum"
+options = [ "Default", "Human", "Deku", "Goron", "Zora" ]
+default = "Default"

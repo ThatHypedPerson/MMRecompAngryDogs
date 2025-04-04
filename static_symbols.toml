@@ -1,0 +1,10 @@
+[[section]]
+name = "..ovl_En_Dg"
+rom = 0x00DFBEC0
+vram = 0x80989140
+size = 0x38E0
+
+symbols = [
+    { name = "sAnimationInfo", vram = 0x8098C35C },
+    { name = "sSelectedRacetrackDogInfo", vram = 0x8098C2FC },
+]
