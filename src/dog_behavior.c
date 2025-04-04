@@ -104,6 +104,7 @@ void EnDg_SetupIdleMove(EnDg *this, PlayState *play);
 s32 EnDg_ShouldReactToNonHumanPlayer(EnDg *this, PlayState *play);
 void EnDg_ChooseActionForForm(EnDg *this, PlayState *play);
 void EnDg_SetupSwim(EnDg *this, PlayState *play);
+void EnDg_TryPickUp(EnDg* this, PlayState* play);
 
 extern RacetrackDogInfo sSelectedRacetrackDogInfo;
 extern AnimationInfoS sAnimationInfo[DOG_ANIM_MAX];
@@ -123,7 +124,7 @@ bool EnDg_ShouldOverrideAction(EnDg* this, PlayState* play) {
 
     switch (recomp_get_config_u32("dog_behavior")) {
         case OPTION_HUMAN:
-            return false;
+            return true;
         case OPTION_DEKU:
             if (this->actor.xzDistToPlayer < 250.0f) {
                 return true;
@@ -265,4 +266,67 @@ RECOMP_PATCH void EnDg_UpdateCollision(EnDg* this, PlayState* play) {
     }
 
     Actor_UpdateBgCheckInfo(play, &this->actor, 26.0f, 10.0f, 0.0f, UPDBGCHECKINFO_FLAG_1 | UPDBGCHECKINFO_FLAG_4);
+}
+
+RECOMP_HOOK("EnDg_IdleMove")
+void EnDg_AllowIdleMovePickup(EnDg* this, PlayState* play) {
+    if (recomp_get_config_u32("dog_behavior")) {
+        EnDg_TryPickUp(this, play);
+    }
+}
+
+RECOMP_HOOK("EnDg_IdleBark")
+void EnDg_AllowIdleBarkPickup(EnDg* this, PlayState* play) {
+    if (recomp_get_config_u32("dog_behavior")) {
+        EnDg_TryPickUp(this, play);
+    }
+}
+
+RECOMP_HOOK("EnDg_ApproachPlayer")
+void EnDg_AllowApproachPickup(EnDg* this, PlayState* play) {
+    if (recomp_get_config_u32("dog_behavior")) {
+        EnDg_TryPickUp(this, play);
+    }
+}
+
+RECOMP_HOOK("EnDg_SitNextToPlayer")
+void EnDg_AllowSitPickup(EnDg* this, PlayState* play) {
+    if (recomp_get_config_u32("dog_behavior")) {
+        EnDg_TryPickUp(this, play);
+    }
+}
+
+RECOMP_HOOK("EnDg_BackAwayFromGoron")
+void EnDg_AllowBackAwayPickup(EnDg* this, PlayState* play) {
+    if (recomp_get_config_u32("dog_behavior")) {
+        EnDg_TryPickUp(this, play);
+    }
+}
+
+RECOMP_HOOK("EnDg_RunAwayFromGoron")
+void EnDg_AllowRunningPickup(EnDg* this, PlayState* play) {
+    if (recomp_get_config_u32("dog_behavior")) {
+        EnDg_TryPickUp(this, play);
+    }
+}
+
+RECOMP_HOOK("EnDg_ApproachPlayerToAttack")
+void EnDg_AllowAttackApproachPickup(EnDg* this, PlayState* play) {
+    if (recomp_get_config_u32("dog_behavior")) {
+        EnDg_TryPickUp(this, play);
+    }
+}
+
+RECOMP_HOOK("EnDg_RunAfterAttacking")
+void EnDg_AllowRunAfterAttackingPickup(EnDg* this, PlayState* play) {
+    if (recomp_get_config_u32("dog_behavior")) {
+        EnDg_TryPickUp(this, play);
+    }
+}
+
+RECOMP_HOOK("EnDg_Thrown")
+void EnDg_AllowThrownPickup(EnDg* this, PlayState* play) {
+    if (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND && recomp_get_config_u32("dog_behavior")) {
+        EnDg_TryPickUp(this, play);
+    }
 }
